@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import { reactDockerFile } from "./functions/react";
 import { FileType } from "./types/FileTypes";
 import { ProjectType } from "./types/ProjectTypes";

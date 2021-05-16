@@ -4,6 +4,7 @@
   "description": "Generate Docker & Docker-Compose File For Your Application",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": "dist/index.js",
   "scripts": {
     "prepublish": "tsc",
     "build": "tsc",
