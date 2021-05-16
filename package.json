@@ -1,6 +1,6 @@
 {
   "name": "docker-gen-file",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Generate Docker & Docker-Compose File For Your Application",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,14 +10,12 @@
     "build": "tsc",
     "watch": "tsc -w",
     "start": "node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Ferin79/docker-gen-file.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "docker",
@@ -37,11 +35,25 @@
     "@types/figlet": "^1.5.1",
     "@types/inquirer": "^7.3.1",
     "@types/node": "^15.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "eslint": "^7.26.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "organize-imports-cli": "^0.8.0",
+    "prettier": "^2.3.0",
     "typescript": "^4.2.4"
   },
   "dependencies": {
     "figlet": "^1.5.0",
     "inquirer": "^8.0.0",
     "ora": "^5.4.0"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,js}": [
+      "eslint --cache --fix",
+      "organize-imports-cli"
+    ],
+    "src/**/*.{ts,js,css,md}": "prettier --write"
   }
 }

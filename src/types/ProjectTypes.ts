@@ -1,5 +1,7 @@
 export enum ProjectType {
-  React = "React",
-  Node = "Node",
+  React = "ReactJs",
+  Vue = "VueJs",
+  Angular = "AngularJs",
+  Node = "NodeJs",
   None = "None",
 }
