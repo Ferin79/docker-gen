@@ -32,6 +32,8 @@ const fileWrite = async (
   }
   spinner.stop();
   spinner.succeed();
+  console.log("Files Generated Successfully...");
+  console.log("🐳 🚀 😍");
 };
 
 figlet("Docker Gen File", function (err, data) {
@@ -78,12 +80,7 @@ figlet("Docker Gen File", function (err, data) {
           }
           dockerIgnore = ReactVueAngularDockerIgnore;
           break;
-        case ProjectType.Node:
-          console.log("Coming Soon");
-          break;
-        case ProjectType.None:
-          console.log("More Programming language support will be added soon");
-          break;
+
         default:
           console.log("Something Went Wrong");
       }

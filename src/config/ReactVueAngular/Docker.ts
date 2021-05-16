@@ -18,14 +18,6 @@ EXPOSE CLIENT_PORT
 CMD ["nginx", "-g", "daemon off;"]
 `;
 
-export const defaultProdCode = `
-# Production Environment
-FROM node:lts-alpine
-WORKDIR /app
-COPY --from=build /app/build ./
-EXPOSE CLIENT_PORT
-`;
-
 export const commandsCode = `
 \n
 # Build Command
@@ -40,7 +32,9 @@ version: '3.7'
 services:
   web:
     container_name: PROJECT_NAME:latest
-    image: PROJECT_NAME
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 'CLIENT_PORT:PROJECT_PORT'
 `;

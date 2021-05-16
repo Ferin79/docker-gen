@@ -14,20 +14,14 @@ npx docker-gen-file
    - ReactJs
    - VueJs
    - AngularJs
-2. NodeJs
 
 ---
 
 ### Upcoming
 
-1. Python
+1. NodeJs
+2. Python
    - Django
    - Flask
-2. PHP
+3. PHP
    - Laravel
-
----
-
-## ReactJs / VueJs / AngularJs
-
-For this languages you can use `nginx` server to create docker container or use normal serve.
