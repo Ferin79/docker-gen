@@ -31,7 +31,7 @@ export const dockerCompose = `
 version: '3.7'
 services:
   web:
-    container_name: PROJECT_NAME:latest
+    container_name: PROJECT_NAME
     build:
       context: .
       dockerfile: Dockerfile
