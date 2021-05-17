@@ -1,9 +1,11 @@
 #! /usr/bin/env node
+
 import figlet from "figlet";
 import inquirer from "inquirer";
 import ora from "ora";
 import { GeneralDockerIgnore } from "./config/DockerIgnore";
 import { NextDockerComposeFile, NextDockerFile } from "./functions/Next";
+import { NodeDockerFile } from "./functions/Node";
 import {
     ReactVueAngularDockerComposeFile,
     ReactVueAngularDockerFile
@@ -89,8 +91,19 @@ figlet("Docker Gen File", async function (err, data) {
       }
       dockerIgnore = GeneralDockerIgnore;
       break;
+
+    case ProjectType.NodeJs:
+      if (answer.fileType === FileType.Dockerfile) {
+        dockerFile = await NodeDockerFile();
+      } else if (answer.fileType === FileType.DockerCompose) {
+        console.log("Coming Soon");
+        process.exit(0);
+      }
+      dockerIgnore = GeneralDockerIgnore;
+      break;
     default:
       console.log("Something Went Wrong");
+      process.exit(0);
   }
 
   fileWrite(dockerFile, dockerCompose, dockerIgnore);

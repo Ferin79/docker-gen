@@ -3,4 +3,5 @@ export enum ProjectType {
   Vue = "VueJs",
   Angular = "AngularJs",
   NextJs = "NextJs",
+  NodeJs = "NodeJs",
 }

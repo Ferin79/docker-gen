@@ -1,9 +1,9 @@
 import inquirer from "inquirer";
 
-export const askPorts = async (projectType: string, defaultPort = 3000) => {
+export const askPorts = async (defaultPort = 3000) => {
   const { projectPort } = await inquirer.prompt([
     {
-      message: `Your ${projectType} Project is Listening at Port ???`,
+      message: `Your project is listening at port??? 🔈`,
       type: "number",
       name: "projectPort",
       default: defaultPort,
@@ -12,7 +12,7 @@ export const askPorts = async (projectType: string, defaultPort = 3000) => {
 
   const { clientPort } = await inquirer.prompt([
     {
-      message: `Port You Want to Expose ???`,
+      message: `Port you want to expose??? 🔈`,
       type: "number",
       name: "clientPort",
       default: projectPort,

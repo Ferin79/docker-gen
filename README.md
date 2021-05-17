@@ -15,16 +15,16 @@ npx docker-gen-file
    - VueJs
    - AngularJs
 2. NextJs
+3. NodeJs
 
 ---
 
 ### Upcoming
 
-1. NodeJs
-2. Python
+1. Python
    - Django
    - Flask
-3. PHP
+2. PHP
    - Laravel
 
 ## Want to help?
