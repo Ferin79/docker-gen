@@ -1,4 +1,4 @@
-export const ReactVueAngularDockerIgnore = `
+export const GeneralDockerIgnore = `
 # Items that don't need to be in a Docker image.
 # Anything not used by the build system should go here.
 Dockerfile*
@@ -9,6 +9,7 @@ README.md
 # Artifacts that will be built during image creation.
 build
 dist
+.next
 node_modules
 
 # Git Files

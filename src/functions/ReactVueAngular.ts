@@ -1,17 +1,13 @@
-import {
-    buildCode,
-    commandsCode,
-    dockerCompose,
-    nginxProdCode
-} from "../config/ReactVueAngular/Docker";
+import { buildCode, dockerCompose } from "../config/ReactVueAngular/Docker";
 import { basename } from "../utils/basename";
+import { BuildHelp } from "./../config/BuildHelp";
 import { NginxConf } from "./../config/ReactVueAngular/Nginx";
 import { WriteToFile } from "./../utils/writeToFile";
 
 export const ReactVueAngularDockerFile = async () => {
   WriteToFile(process.cwd() + "/nginx.conf", NginxConf);
 
-  let finalBuild = buildCode + nginxProdCode + commandsCode;
+  let finalBuild = buildCode + BuildHelp;
   finalBuild = finalBuild.replace(/PROJECT_NAME/g, basename);
   finalBuild = finalBuild.replace(/CLIENT_PORT/g, "80");
   finalBuild = finalBuild.replace(/PROJECT_PORT/g, "80");

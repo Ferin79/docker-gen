@@ -1,9 +1,9 @@
 #! /usr/bin/env node
-
 import figlet from "figlet";
 import inquirer from "inquirer";
 import ora from "ora";
-import { ReactVueAngularDockerIgnore } from "./config/ReactVueAngular/DockerIgnore";
+import { GeneralDockerIgnore } from "./config/DockerIgnore";
+import { NextDockerComposeFile, NextDockerFile } from "./functions/Next";
 import {
     ReactVueAngularDockerComposeFile,
     ReactVueAngularDockerFile
@@ -36,7 +36,7 @@ const fileWrite = async (
   console.log("🐳 🚀 😍");
 };
 
-figlet("Docker Gen File", function (err, data) {
+figlet("Docker Gen File", async function (err, data) {
   if (err) {
     console.log("Something went wrong...");
     console.error(err);
@@ -48,43 +48,50 @@ figlet("Docker Gen File", function (err, data) {
   const projectTypeList = Object.values(ProjectType);
   const fileTypeList = Object.values(FileType);
 
-  inquirer
-    .prompt([
-      {
-        type: "list",
-        choices: projectTypeList,
-        message: "Select Your Project Type!!! 🤔",
-        name: "projectType",
-      },
-      {
-        type: "list",
-        choices: fileTypeList,
-        message: "What do you want to generate? 🐳",
-        name: "fileType",
-      },
-    ])
-    .then(async (answer) => {
-      let dockerFile = "";
-      let dockerIgnore = "";
-      let dockerCompose = "";
+  const answer = await inquirer.prompt([
+    {
+      type: "list",
+      choices: projectTypeList,
+      message: "Select Your Project Type!!! 🤔",
+      name: "projectType",
+    },
+    {
+      type: "list",
+      choices: fileTypeList,
+      message: "What do you want to generate? 🐳",
+      name: "fileType",
+    },
+  ]);
 
-      switch (answer.projectType) {
-        case ProjectType.Vue:
-        case ProjectType.Angular:
-        case ProjectType.React:
-          if (answer.fileType === FileType.Dockerfile) {
-            dockerFile = await ReactVueAngularDockerFile();
-          } else if (answer.fileType === FileType.DockerCompose) {
-            dockerFile = await ReactVueAngularDockerFile();
-            dockerCompose = await ReactVueAngularDockerComposeFile();
-          }
-          dockerIgnore = ReactVueAngularDockerIgnore;
-          break;
+  let dockerFile = "";
+  let dockerIgnore = "";
+  let dockerCompose = "";
 
-        default:
-          console.log("Something Went Wrong");
+  switch (answer.projectType) {
+    case ProjectType.Vue:
+    case ProjectType.Angular:
+    case ProjectType.React:
+      if (answer.fileType === FileType.Dockerfile) {
+        dockerFile = await ReactVueAngularDockerFile();
+      } else if (answer.fileType === FileType.DockerCompose) {
+        dockerFile = await ReactVueAngularDockerFile();
+        dockerCompose = await ReactVueAngularDockerComposeFile();
       }
+      dockerIgnore = GeneralDockerIgnore;
+      break;
 
-      fileWrite(dockerFile, dockerCompose, dockerIgnore);
-    });
+    case ProjectType.NextJs:
+      if (answer.fileType === FileType.Dockerfile) {
+        dockerFile = await NextDockerFile();
+      } else if (answer.fileType === FileType.DockerCompose) {
+        dockerFile = await NextDockerFile();
+        dockerCompose = await NextDockerComposeFile();
+      }
+      dockerIgnore = GeneralDockerIgnore;
+      break;
+    default:
+      console.log("Something Went Wrong");
+  }
+
+  fileWrite(dockerFile, dockerCompose, dockerIgnore);
 });
