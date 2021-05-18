@@ -5,7 +5,7 @@ import inquirer from "inquirer";
 import ora from "ora";
 import { GeneralDockerIgnore } from "./config/DockerIgnore";
 import { NextDockerComposeFile, NextDockerFile } from "./functions/Next";
-import { NodeDockerFile } from "./functions/Node";
+import { NodeDockerComposeFile, NodeDockerFile } from "./functions/Node";
 import {
     ReactVueAngularDockerComposeFile,
     ReactVueAngularDockerFile
@@ -96,8 +96,8 @@ figlet("Docker Gen File", async function (err, data) {
       if (answer.fileType === FileType.Dockerfile) {
         dockerFile = await NodeDockerFile();
       } else if (answer.fileType === FileType.DockerCompose) {
-        console.log("Coming Soon");
-        process.exit(0);
+        dockerFile = await NodeDockerFile();
+        dockerCompose = await NodeDockerComposeFile();
       }
       dockerIgnore = GeneralDockerIgnore;
       break;

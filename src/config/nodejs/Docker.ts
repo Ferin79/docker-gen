@@ -29,3 +29,22 @@ COPY . ./
 
 RUN BUILD_SCRIPT
 `;
+
+export const dockerCompose = `
+version: '3.7'
+services:
+    web:
+        container_name: PROJECT_NAME
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - CLIENT_PORT:PROJECT_PORT
+
+    OTHER_SERVICES
+
+volumes:
+    data:
+networks:
+    dockergenfile:
+`;

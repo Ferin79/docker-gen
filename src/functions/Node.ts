@@ -1,5 +1,23 @@
-import { buildCode, withTypeScript } from "./../config/nodejs/Docker";
+import {
+    MariaDBService,
+    MongoService,
+    MySQLService,
+    PostgreService,
+    RedisService
+} from "./../config/db/Docker";
+import {
+    mongoClientService,
+    pgAdminService,
+    phpMyAdminService
+} from "./../config/db/DockerGUI";
+import {
+    buildCode,
+    dockerCompose,
+    withTypeScript
+} from "./../config/nodejs/Docker";
 import { askBuildQues } from "./../questions/askBuildQues";
+import { askDB } from "./../questions/askDB";
+import { DBs } from "./../types/DBTypes";
 import { PortReplace } from "./../utils/portReplace";
 
 export const NodeDockerFile = async () => {
@@ -28,5 +46,47 @@ export const NodeDockerFile = async () => {
 
   const finalCode = await PortReplace(finalBuild, true);
 
+  return finalCode;
+};
+
+export const NodeDockerComposeFile = async () => {
+  const data = await askDB();
+  let services = "";
+  data.forEach((item) => {
+    switch (item.name) {
+      case DBs.MySql:
+        services += MySQLService;
+        if (item.addGUI) {
+          services += phpMyAdminService;
+        }
+        break;
+      case DBs.MariaDB:
+        services += MariaDBService;
+        if (item.addGUI) {
+          services += phpMyAdminService;
+        }
+        break;
+      case DBs.PostgreSQl:
+        services += PostgreService;
+        if (item.addGUI) {
+          services += pgAdminService;
+        }
+        break;
+      case DBs.MongoDB:
+        services += MongoService;
+        if (item.addGUI) {
+          services += mongoClientService;
+        }
+        break;
+      case DBs.Redis:
+        services += RedisService;
+        break;
+    }
+  });
+
+  let finalBuild = dockerCompose;
+  finalBuild = dockerCompose.replace("OTHER_SERVICES", services);
+
+  const finalCode = await PortReplace(finalBuild, false);
   return finalCode;
 };
