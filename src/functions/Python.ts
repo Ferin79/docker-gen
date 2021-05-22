@@ -1,3 +1,4 @@
+import { exec } from "child_process";
 import fs from "fs";
 import inquirer from "inquirer";
 import path from "path";
@@ -19,10 +20,18 @@ import { DBs } from "../types/DBTypes";
 import { PortReplace } from "../utils/portReplace";
 import { Nginx, NginxDockerFile, uwsgi_params } from "./../config/django/Nginx";
 import { entryPoint } from "./../config/django/scripts";
+import { basename } from "./../utils/basename";
 import { WriteToFile } from "./../utils/writeToFile";
 
 export const PythonDockerFile = async () => {
   let finalCode = "";
+
+  exec("pip freeze > requirements.txt", async (err) => {
+    if (err) {
+      console.log(err);
+      process.exit(0);
+    }
+  });
 
   const { framework } = await inquirer.prompt([
     {
@@ -36,7 +45,9 @@ export const PythonDockerFile = async () => {
   if (framework === "Django") {
     finalCode = await PortReplace(DockerFile, true);
 
-    WriteToFile(path.join(process.cwd() + "/entrypoint.sh"), entryPoint);
+    const entryPointP = entryPoint.replace(/PROJECT_NAME/g, basename);
+
+    WriteToFile(path.join(process.cwd() + "/entrypoint.sh"), entryPointP);
     if (!fs.existsSync("nginx")) {
       fs.mkdirSync("nginx");
     }
