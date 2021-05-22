@@ -46,13 +46,13 @@ services:
 
     nginx:
         build:
-        context: ./nginx
-    volumes:
-        - static_data:/vol/static
-    ports:
-        - "CLIENT_PORT:8080"
-    depends_on:
-        - web
+            context: ./nginx
+        volumes:
+            - static_data:/vol/static
+        ports:
+            - CLIENT_PORT:8080
+        depends_on:
+            - web
 
 volumes:
     data:

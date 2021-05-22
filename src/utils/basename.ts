@@ -5,5 +5,4 @@ export const basename = path
   .split("-")
   .join("")
   .split(" ")
-  .join("")
-  .toLowerCase();
+  .join("");
