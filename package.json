@@ -34,7 +34,6 @@
   },
   "homepage": "https://github.com/Ferin79/docker-gen-file#readme",
   "devDependencies": {
-    "@types/figlet": "^1.5.1",
     "@types/inquirer": "^7.3.1",
     "@types/node": "^15.3.0",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
@@ -47,9 +46,7 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "figlet": "^1.5.0",
-    "inquirer": "^8.0.0",
-    "ora": "^5.4.0"
+    "inquirer": "^8.0.0"
   },
   "lint-staged": {
     "./src/**/*.{ts,js}": [

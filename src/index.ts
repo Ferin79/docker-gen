@@ -1,11 +1,10 @@
 #! /usr/bin/env node
 
-import figlet from "figlet";
 import inquirer from "inquirer";
-import ora from "ora";
 import { GeneralDockerIgnore } from "./config/DockerIgnore";
 import { NextDockerComposeFile, NextDockerFile } from "./functions/Next";
 import { NodeDockerComposeFile, NodeDockerFile } from "./functions/Node";
+import { PythonDockerComposeFile, PythonDockerFile } from "./functions/Python";
 import {
     ReactVueAngularDockerComposeFile,
     ReactVueAngularDockerFile
@@ -19,10 +18,6 @@ const fileWrite = async (
   dockerCompose: string,
   dockerIgnore: string
 ) => {
-  const spinner = ora();
-  spinner.color = "blue";
-  spinner.text = "Generating Files";
-  spinner.start();
   if (dockerFile.length) {
     WriteToFile(process.cwd() + "/Dockerfile", dockerFile);
   }
@@ -32,21 +27,12 @@ const fileWrite = async (
   if (dockerIgnore.length) {
     WriteToFile(process.cwd() + "/.dockerignore", dockerIgnore);
   }
-  spinner.stop();
-  spinner.succeed();
+
   console.log("Files Generated Successfully...");
   console.log("🐳 🚀 😍");
 };
 
-figlet("Docker Gen File", async function (err, data) {
-  if (err) {
-    console.log("Something went wrong...");
-    console.error(err);
-
-    return;
-  }
-  console.log(data);
-
+async function main() {
   const projectTypeList = Object.values(ProjectType);
   const fileTypeList = Object.values(FileType);
 
@@ -101,10 +87,17 @@ figlet("Docker Gen File", async function (err, data) {
       }
       dockerIgnore = GeneralDockerIgnore;
       break;
+    case ProjectType.Python:
+      dockerFile = await PythonDockerFile();
+      dockerCompose = await PythonDockerComposeFile();
+      dockerIgnore = GeneralDockerIgnore;
+      break;
     default:
       console.log("Something Went Wrong");
       process.exit(0);
   }
 
   fileWrite(dockerFile, dockerCompose, dockerIgnore);
-});
+}
+
+main();

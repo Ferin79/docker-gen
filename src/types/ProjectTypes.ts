@@ -4,4 +4,5 @@ export enum ProjectType {
   Angular = "AngularJs",
   NextJs = "NextJs",
   NodeJs = "NodeJs",
+  Python = "Python",
 }

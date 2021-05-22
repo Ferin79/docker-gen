@@ -84,8 +84,7 @@ export const NodeDockerComposeFile = async () => {
     }
   });
 
-  let finalBuild = dockerCompose;
-  finalBuild = dockerCompose.replace("OTHER_SERVICES", services);
+  const finalBuild = dockerCompose.replace("OTHER_SERVICES", services);
 
   const finalCode = await PortReplace(finalBuild, false);
   return finalCode;
