@@ -6,6 +6,10 @@ This module allows you to create Docker and Docker Compose files for your projec
 npx docker-gen-file
 ```
 
+**NOTE**
+
+- Execute this command at root level of your project
+
 ---
 
 ### Currently Supported Languages & Frameworks
@@ -16,13 +20,14 @@ npx docker-gen-file
    - AngularJs
 2. NextJs
 3. NodeJs
+4. Python
+   - Django
 
 ---
 
 ### Upcoming
 
 1. Python
-   - Django
    - Flask
 2. PHP
    - Laravel

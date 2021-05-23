@@ -10,7 +10,7 @@ RUN npm run build
 
 # Production Environment
 FROM nginx:stable-alpine
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/BUILD_FOLDER /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE CLIENT_PORT
 CMD ["nginx", "-g", "daemon off;"]

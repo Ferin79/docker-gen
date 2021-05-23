@@ -23,27 +23,12 @@ import { Nginx, NginxDockerFile } from "./../config/django/Nginx";
 import { entryPoint } from "./../config/django/scripts";
 import { askPythonFramework } from "./../questions/askPythonFramework";
 import { State } from "./../store/index";
-import { basename } from "./../utils/basename";
 import { WriteToFile } from "./../utils/writeToFile";
 
 export const PythonDockerFile = async () => {
   let finalCode = "";
 
-  exec("pip freeze > requirements-gen.txt", async (err) => {
-    if (err) {
-      console.log(err);
-      process.exit(0);
-    }
-
-    exec("echo 'gunicorn==20.0.4' >> requirements-gen.txt", async (err) => {
-      if (err) {
-        console.log(err);
-        process.exit(0);
-      }
-    });
-  });
-
-  const framework = await askPythonFramework();
+  const { framework } = await askPythonFramework();
   if (framework === "Django") {
     finalCode = OnlyDockerFile + BuildHelp;
     finalCode = await PortReplace(finalCode, true);
@@ -54,7 +39,7 @@ export const PythonDockerFile = async () => {
 
 export const PythonExtraDockerFile = async () => {
   let finalCode = "\t";
-  const framework = await askPythonFramework();
+  const { framework } = await askPythonFramework();
   if (framework === "Django") {
     finalCode = await PortReplace(DockerFile, true);
 
@@ -131,7 +116,7 @@ export const PythonDockerComposeFile = async () => {
   echo 'MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")' >> BASE_PROJECT_NAME/settings.py
 `;
 
-  CMDcode = CMDcode.replace(/BASE_PROJECT_NAME/g, basename);
+  CMDcode = CMDcode.replace(/BASE_PROJECT_NAME/g, State.PROJECT_NAME);
 
   exec(CMDcode, async (err) => {
     if (err) {
