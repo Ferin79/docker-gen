@@ -4,7 +4,11 @@ import inquirer from "inquirer";
 import { GeneralDockerIgnore } from "./config/DockerIgnore";
 import { NextDockerComposeFile, NextDockerFile } from "./functions/Next";
 import { NodeDockerComposeFile, NodeDockerFile } from "./functions/Node";
-import { PythonDockerComposeFile, PythonDockerFile } from "./functions/Python";
+import {
+    PythonDockerComposeFile,
+    PythonDockerFile,
+    PythonExtraDockerFile
+} from "./functions/Python";
 import {
     ReactVueAngularDockerComposeFile,
     ReactVueAngularDockerFile
@@ -88,8 +92,12 @@ async function main() {
       dockerIgnore = GeneralDockerIgnore;
       break;
     case ProjectType.Python:
-      dockerFile = await PythonDockerFile();
-      dockerCompose = await PythonDockerComposeFile();
+      if (answer.fileType === FileType.Dockerfile) {
+        dockerFile = await PythonDockerFile();
+      } else if (answer.fileType === FileType.DockerCompose) {
+        dockerFile = await PythonExtraDockerFile();
+        dockerCompose = await PythonDockerComposeFile();
+      }
       dockerIgnore = GeneralDockerIgnore;
       break;
     default:

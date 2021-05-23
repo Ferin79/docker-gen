@@ -1,46 +1,109 @@
-const BaseDockerFile = 'FROM python:3.8-alpine\nENV PATH="/scripts:${PATH}"';
+export const OnlyDockerFile = `
+# pull official base image
+FROM python:3.8.3-alpine
 
-export const DockerFile =
-  BaseDockerFile +
-  `
-COPY ./requirements.txt /requirements.txt
-RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers
-RUN pip install -r /requirements.txt
-RUN apk del .tmp
-
+# set work directory
 WORKDIR /app
-COPY ./PROJECT_NAME .
-COPY ./entrypoint.sh .
 
-RUN chmod +x ./entrypoint.sh
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-RUN mkdir -p /vol/web/media
-RUN mkdir -p /vol/web/static
+# install dependencies
+RUN pip install --upgrade pip
+COPY ./requirements-gen.txt .
+RUN pip install -r requirements-gen.txt
 
-RUN adduser -D user
-RUN chown -R user:user /vol
-RUN chmod -R 755 /vol/
-USER user
+# copy project
+COPY . .
 
 EXPOSE PROJECT_PORT
 
-CMD ["entrypoint.sh"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:PROJECT_PORT"]
+`;
+export const DockerFile = `
+# Build Environment
+
+FROM python:3.8.3-alpine as builder
+
+# set work directory
+WORKDIR /app
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# install psycopg2 dependencies
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev
+
+# lint
+RUN pip install --upgrade pip
+RUN pip install flake8
+COPY . .
+RUN flake8 --ignore=E501,F401 .
+
+# install dependencies
+COPY ./requirements-gen.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements-gen.txt
+
+
+# Production Environment
+
+FROM python:3.8.3-alpine
+
+# create directory for the app user
+RUN mkdir -p /home/app
+
+# create the app user
+RUN addgroup -S app && adduser -S app -G app
+
+# create the appropriate directories
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
+RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/staticfiles
+RUN mkdir $APP_HOME/mediafiles
+WORKDIR $APP_HOME
+
+# install dependencies
+RUN apk update && apk add libpq
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /usr/src/app/requirements-gen.txt .
+RUN pip install --no-cache /wheels/*
+
+COPY ./entrypoint.sh $APP_HOME
+
+# copy project
+COPY . $APP_HOME
+
+# chown all the files to the app user
+RUN chown -R app:app $APP_HOME
+
+# change to the app user
+USER app
+
+ENTRYPOINT ["/home/app/web/entrypoint.sh"]
 `;
 
 export const DockerCompose = `
 version: '3.7'
 services:
     web:
-        container_name: PROJECT_NAME
         build:
-            context: .
-            dockerfile: Dockerfile
+            context: ./
+        command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:PROJECT_PORT
         volumes:
-            - static_data:/vol/web
-        environment:
-            - DEBUG=False
-            - SECRET_KEY=samplesecret123
-            - ALLOWED_HOSTS=127.0.0.1,localhost
+            - static_volume:/home/app/web/staticfiles
+            - media_volume:/home/app/web/mediafiles
+        expose:
+            - PROJECT_PORT
+        env_file:
+            - DEBUG=0
+            - SECRET_KEY=change_me
+            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+        depends_on:
+        \tDEPEND_DB
 
     OTHER_SERVICES
 
@@ -48,15 +111,17 @@ services:
         build:
             context: ./nginx
         volumes:
-            - static_data:/vol/static
+            - static_volume:/home/app/web/staticfiles
+            - media_volume:/home/app/web/mediafiles
         ports:
-            - CLIENT_PORT:8080
+            - CLIENT_PORT:80
         depends_on:
             - web
 
 volumes:
     data:
-    static_data:
+    static_volume:
+    media_volume:
 networks:
     dockergenfile:
 `;
