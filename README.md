@@ -3,7 +3,7 @@
 This module allows you to create Docker and Docker Compose files for your project.
 
 ```
-npx docker-gen-file
+npx docker-gen-file@latest
 ```
 
 **NOTE**
