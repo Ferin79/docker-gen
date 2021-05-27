@@ -102,11 +102,7 @@ services:
             - DEBUG=0
             - SECRET_KEY=change_me
             - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-        depends_on:
-        \tDEPEND_DB
-
     OTHER_SERVICES
-
     nginx:
         build:
             context: ./nginx

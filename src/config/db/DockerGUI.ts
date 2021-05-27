@@ -1,41 +1,41 @@
 export const phpMyAdminService = `
-\tphpmyadmin:
-    \timage: phpmyadmin
-    \trestart: always
-    \tports:
-        \t- 8088:80
-    \texpose:
-        \t- 80
-    \tnetworks:
-        \t- dockergenfile
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        ports:
+            - 8088:80
+        expose:
+            - 80
+        networks:
+            - dockergenfile
 `;
 export const pgAdminService = `
-\tpgadmin4:
-    \timage: dpage/pgadmin4
-    \trestart: always
-    \tenvironment:
-        \t- PGADMIN_DEFAULT_EMAIL = admin@pg.com
-        \t- PGADMIN_DEFAULT_PASSWORD = admin
-        \t- PGADMIN_LISTEN_PORT = 80
-    \tports:
-        \t- 8899:80
-    \texpose:
-        \t- 80
-    \tnetworks:
-        \t- dockergenfile
-    depends_on:
-        \t- postgresql_database
+    pgadmin4:
+        image: dpage/pgadmin4
+        restart: always
+        environment:
+            - PGADMIN_DEFAULT_EMAIL = admin@pg.com
+            - PGADMIN_DEFAULT_PASSWORD = admin
+            - PGADMIN_LISTEN_PORT = 80
+        ports:
+            - 8899:80
+        expose:
+            - 80
+        networks:
+            - dockergenfile
+        depends_on:
+            - postgresql_database
 `;
 export const mongoClientService = `
-\tmongoclient:
-    \timage: mongoclient/mongoclient
-    \trestart: always
-    \tports:
-        \t- 5520:3000
-    \texpose:
-        \t- 3000
-    \tnetworks:
-        \t- dockergenfile
-    depends_on:
-        \t- mongodb_database
+    mongoclient:
+        image: mongoclient/mongoclient
+        restart: always
+        ports:
+            - 5520:3000
+        expose:
+            - 3000
+        networks:
+            - dockergenfile
+        depends_on:
+            - mongodb_database
 `;

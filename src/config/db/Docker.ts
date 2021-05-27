@@ -1,80 +1,80 @@
 export const MySQLService = `
-\tmysql_database:
-    \timage: mysql
-    \trestart: always
-    \tenvironment:
-        \tMYSQL_DATABASE: test_db
-        \tMYSQL_ROOT_PASSWORD: root
-        \tMYSQL_ROOT_PASSWORD: root
-    \tports:
-        \t- 3306:3306
-    \texpose:
-        \t- 3306
-    \tvolumes:
-        \t- data/mysql:/var/lib/mysql
-    \tnetworks:
-        \t- dockergenfile
+    mysql_database:
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_DATABASE: test_db
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - 3306:3306
+        expose:
+            - 3306
+        volumes:
+            - data/mysql:/var/lib/mysql
+        networks:
+            - dockergenfile
 `;
 
 export const MariaDBService = `
-\tmariadb_database:
-    \timage: mariadb
-    \trestart: always
-    \tenvironment:
-        \tMYSQL_DATABASE: test_db
-        \tMYSQL_ROOT_PASSWORD: root
-        \tMYSQL_ROOT_PASSWORD: root
-    \tports:
-        \t- 3306:3306
-    \texpose:
-        \t- 3306
-    \tvolumes:
-        \t- data/mariadb:/var/lib/mysql
-    \tnetworks:
-        \t- dockergenfile
+    mariadb_database:
+        image: mariadb
+        restart: always
+        environment:
+            MYSQL_DATABASE: test_db
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - 3306:3306
+        expose:
+            - 3306
+        volumes:
+            - data/mariadb:/var/lib/mysql
+        networks:
+            - dockergenfile
 `;
 
 export const PostgreService = `
-\tpostgresql_database:
-    \timage: postgres:alpine
-    \trestart: always
-    \tenvironment:
-        \tPOSTGRES_DB: test_db
-        \tPOSTGRES_USER: postgres
-        \tPOSTGRES_PASSWORD: postgres
-    \tports:
-        \t- 5432:5432
-    \texpose:
-        \t- 5432
-    \tvolumes:
-        \t- data/postgresql:/var/lib/postgresql/data
-    \tnetworks:
-       \t- dockergenfile
+    postgresql_database:
+        image: postgres:alpine
+        restart: always
+        environment:
+            POSTGRES_DB: test_db
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        ports:
+            - 5432:5432
+        expose:
+            - 5432
+        volumes:
+            - data/postgresql:/var/lib/postgresql/data
+        networks:
+        - dockergenfile
 `;
 
 export const MongoService = `
-\tmongodb_database:
-    \timage: mongo
-    \trestart: always
-    \tenvironment:
-        \tMONGO_INITDB_DATABASE: test_db
-        \tMONGO_INITDB_ROOT_USERNAME: root
-        \tMONGO_INITDB_ROOT_PASSWORD: root
-    \tports:
-        \t- 27017:27017
-    \texpose:
-        \t- 27017
-    \tvolumes:
-        \t- data/mongodb:/data/db
-    \tnetworks:
-        \t- dockergenfile
+    mongodb_database:
+        image: mongo
+        restart: always
+        environment:
+            MONGO_INITDB_DATABASE: test_db
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: root
+        ports:
+            - 27017:27017
+        expose:
+            - 27017
+        volumes:
+            - data/mongodb:/data/db
+        networks:
+            - dockergenfile
 `;
 
 export const RedisService = `
-\tredis_database:
-    \timage: redis:alpine
-    \tvolumes:
-        \t- /data/redis:/data
-    \tnetworks:
-        \t- dockergenfile
+    redis_database:
+        image: redis:alpine
+        volumes:
+            - /data/redis:/data
+        networks:
+            - dockergenfile
 `;

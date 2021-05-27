@@ -56,35 +56,35 @@ export const PhpDockerComposeFile = async () => {
     switch (item.name) {
       case DBs.MySql:
         services += MySQLService;
-        dependsOn += "- mysql_database\n\t\t\t";
+        dependsOn += "- mysql_database\n";
         if (item.addGUI) {
           services += phpMyAdminService;
         }
         break;
       case DBs.MariaDB:
         services += MariaDBService;
-        dependsOn += "- mariadb_database\n\t\t\t";
+        dependsOn += "- mariadb_database\n";
         if (item.addGUI) {
           services += phpMyAdminService;
         }
         break;
       case DBs.PostgreSQl:
         services += PostgreService;
-        dependsOn += "- postgresql_database\n\t\t\t";
+        dependsOn += "- postgresql_database\n";
         if (item.addGUI) {
           services += pgAdminService;
         }
         break;
       case DBs.MongoDB:
         services += MongoService;
-        dependsOn += "- mongodb_database\n\t\t\t";
+        dependsOn += "- mongodb_database\n";
         if (item.addGUI) {
           services += mongoClientService;
         }
         break;
       case DBs.Redis:
         services += RedisService;
-        dependsOn += "- redis_database\n\t\t\t";
+        dependsOn += "- redis_database\n";
         break;
     }
   });

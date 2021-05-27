@@ -34,11 +34,7 @@ services:
         volumes:
             - /var/www/storage
         env_file: ".env"
-        depends_on:
-        \tDEPEND_DB
-
     OTHER_SERVICES
-
     nginx:
         build:
             context: ./nginx

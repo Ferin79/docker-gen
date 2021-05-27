@@ -22,6 +22,8 @@ npx docker-gen-file
 3. NodeJs
 4. Python
    - Django
+5. Php
+   - Laravel
 
 ---
 
@@ -29,8 +31,10 @@ npx docker-gen-file
 
 1. Python
    - Flask
-2. PHP
-   - Laravel
+2. Elixir
+   - Phoenix
+3. Rust
+   - Rocket
 
 ## Want to help?
 
