@@ -36,6 +36,12 @@ npx docker-gen-file
 3. Rust
    - Rocket
 
+## Report An Issue
+
+---
+
+If you come across any bug or issue in the package then you can create Issue or Resolved Pull Request on Github.
+
 ## Want to help?
 
 ---

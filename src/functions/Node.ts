@@ -35,7 +35,7 @@ export const NodeDockerFile = async () => {
     finalBuild = finalBuild.replace(/BUILD_SCRIPT/g, buildCmdMain);
     finalBuild = finalBuild.replace(
       /COPY_FOLDER/g,
-      `--from=build ${buildOtpMain}`
+      `--from=build /app/${buildOtpMain}`
     );
   } else {
     finalBuild = buildCode;
