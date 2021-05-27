@@ -11,7 +11,7 @@ export const MySQLService = `
         expose:
             - 3306
         volumes:
-            - data/mysql:/var/lib/mysql
+            - ./data/mysql:/var/lib/mysql
         networks:
             - dockergenfile
 `;
@@ -29,7 +29,7 @@ export const MariaDBService = `
         expose:
             - 3306
         volumes:
-            - data/mariadb:/var/lib/mysql
+            - ./data/mariadb:/var/lib/mysql
         networks:
             - dockergenfile
 `;
@@ -47,7 +47,7 @@ export const PostgreService = `
         expose:
             - 5432
         volumes:
-            - data/postgresql:/var/lib/postgresql/data
+            - ./data/postgresql:/var/lib/postgresql/data
         networks:
         - dockergenfile
 `;
@@ -65,7 +65,7 @@ export const MongoService = `
         expose:
             - 27017
         volumes:
-            - data/mongodb:/data/db
+            - ./data/mongodb:/data/db
         networks:
             - dockergenfile
 `;
@@ -74,7 +74,7 @@ export const RedisService = `
     redis_database:
         image: redis:alpine
         volumes:
-            - /data/redis:/data
+            - ./data/redis:/data
         networks:
             - dockergenfile
 `;

@@ -1,6 +1,6 @@
 {
   "name": "docker-gen-file",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Generate Docker & Docker-Compose File For Your Application",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
