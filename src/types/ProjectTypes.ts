@@ -5,4 +5,5 @@ export enum ProjectType {
   NextJs = "NextJs",
   NodeJs = "NodeJs",
   Python = "Python",
+  Php = "Php",
 }

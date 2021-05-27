@@ -39,4 +39,8 @@ __pycache__
 env
 logs
 stats
+vendor
+storage/framework/cache/**
+storage/framework/sessions/**
+storage/framework/views/**
 `;

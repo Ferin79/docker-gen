@@ -1,9 +1,9 @@
 #! /usr/bin/env node
-
 import inquirer from "inquirer";
 import { GeneralDockerIgnore } from "./config/DockerIgnore";
 import { NextDockerComposeFile, NextDockerFile } from "./functions/Next";
 import { NodeDockerComposeFile, NodeDockerFile } from "./functions/Node";
+import { PhpDockerComposeFile, PhpDockerFile } from "./functions/Php";
 import {
     PythonDockerComposeFile,
     PythonDockerFile,
@@ -98,6 +98,12 @@ async function main() {
         dockerFile = await PythonExtraDockerFile();
         dockerCompose = await PythonDockerComposeFile();
       }
+      dockerIgnore = GeneralDockerIgnore;
+      break;
+    case ProjectType.Php:
+      dockerFile = await PhpDockerFile();
+      dockerCompose = await PhpDockerComposeFile();
+
       dockerIgnore = GeneralDockerIgnore;
       break;
     default:
