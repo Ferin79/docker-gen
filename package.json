@@ -1,6 +1,6 @@
 {
-  "name": "docker-gen-file",
-  "version": "1.0.0",
+  "name": "docker-gen",
+  "version": "2.0.0",
   "description": "Generate Docker & Docker-Compose File For Your Application",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,7 +25,9 @@
     "dockerfile",
     "node-docker",
     "gen-dockerfile",
-    "gen-docker"
+    "gen-docker",
+    "docker-gen-file",
+    "docker-file"
   ],
   "author": "Ferin Patel",
   "license": "ISC",

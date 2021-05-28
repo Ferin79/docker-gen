@@ -1,9 +1,11 @@
-# Docker Gen File
+# Docker Gen
+
+### Docker Generate
 
 This module allows you to create Docker and Docker Compose files for your project.
 
 ```
-npx docker-gen-file@latest
+npx docker-gen@latest
 ```
 
 **NOTE**
